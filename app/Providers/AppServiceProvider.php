@@ -3,6 +3,8 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use function MongoDB\Driver\Monitoring\addSubscriber;
+use App\Monitoring\MongoCommandSubscriber;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -19,6 +21,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        addSubscriber(new MongoCommandSubscriber());
     }
 }
