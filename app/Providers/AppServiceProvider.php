@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Services\QueryMonitorService;
 use Illuminate\Support\ServiceProvider;
 use function MongoDB\Driver\Monitoring\addSubscriber;
 use App\Monitoring\MongoCommandSubscriber;
@@ -13,7 +14,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        // Share one monitor instance per request lifecycle.
+        $this->app->singleton(QueryMonitorService::class, function () {
+            return new QueryMonitorService();
+        });
     }
 
     /**

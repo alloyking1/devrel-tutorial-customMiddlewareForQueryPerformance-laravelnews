@@ -9,8 +9,10 @@ class PostController extends Controller
 {
     public function index()
     {
-        return Post::where('title', 'like', '%API%')
+        $posts = Post::where('title', 'like', '%API%')
             ->limit(10)
             ->get();
+
+        return response()->json($posts);
     }
 }
