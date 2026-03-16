@@ -11,10 +11,20 @@ use App\Services\QueryMonitorService;
 class MongoCommandSubscriber implements CommandSubscriber
 {
     protected array $startTimes = [];
+    protected array $operations = [];
+    protected array $collections = [];
 
     public function commandStarted(CommandStartedEvent $event): void
     {
-        $this->startTimes[$event->getRequestId()] = microtime(true);
+        $requestId = $event->getRequestId();
+        $this->startTimes[$requestId] = microtime(true);
+
+        $operation = $event->getCommandName();
+        $command = get_object_vars($event->getCommand());
+        $collection = $command[$operation] ?? 'unknown';
+
+        $this->operations[$requestId] = $operation;
+        $this->collections[$requestId] = $collection;
     }
 
     public function commandSucceeded(CommandSucceededEvent $event): void
@@ -26,24 +36,29 @@ class MongoCommandSubscriber implements CommandSubscriber
         }
 
         $duration = (microtime(true) - $this->startTimes[$requestId]) * 1000;
-
-        $command = $event->getCommandName();
-        $database = $event->getDatabaseName();
+        $operation = $this->operations[$requestId] ?? $event->getCommandName();
+        $collection = $this->collections[$requestId] ?? 'unknown';
 
         $monitor = app(QueryMonitorService::class);
 
         $monitor->record(
-            $database,
-            $command,
+            $collection,
+            $operation,
             $duration
         );
 
         unset($this->startTimes[$requestId]);
+        unset($this->operations[$requestId]);
+        unset($this->collections[$requestId]);
     }
 
     public function commandFailed(CommandFailedEvent $event): void
     {
-        // Clean up tracked start time when a MongoDB command fails.
-        unset($this->startTimes[$event->getRequestId()]);
+        $requestId = $event->getRequestId();
+
+        // Clean up tracked state when a MongoDB command fails.
+        unset($this->startTimes[$requestId]);
+        unset($this->operations[$requestId]);
+        unset($this->collections[$requestId]);
     }
 }

@@ -22,7 +22,8 @@ class PerformanceMiddleware
 
         $monitor = app(QueryMonitorService::class);
 
-        $route = optional($request->route())->getName() ?? 'unknown';
+        $resolvedRoute = $request->route();
+        $route = $resolvedRoute?->getName() ?? $resolvedRoute?->uri() ?? $request->path();
         $monitor->persist($route, $requestDuration);
 
         return $response;
