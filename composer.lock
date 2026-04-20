@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "96a0dcd44b58c645f53717a7962ed4ff",
+    "content-hash": "9b69fc8e16c0c500c934e4006953c07a",
     "packages": [
         {
             "name": "brick/math",
@@ -2305,6 +2305,38 @@
                 }
             ],
             "time": "2026-01-02T08:56:05+00:00"
+        },
+        {
+            "name": "mosesanu/laravel-mongodb-query-monitor",
+            "version": "dev-main",
+            "dist": {
+                "type": "path",
+                "url": "../laravel_packages/laravel-mongodb-query-monitor",
+                "reference": "7b6c4c201e8ad4c4c2bd59e8ef6dd8b5d9bb52c0"
+            },
+            "require": {
+                "php": "^8.2"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "MosesAnu\\MongoQueryMonitor\\MongoQueryMonitorServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "MosesAnu\\MongoQueryMonitor\\": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "description": "MongoDB query performance monitoring for Laravel",
+            "transport-options": {
+                "relative": true
+            }
         },
         {
             "name": "nesbot/carbon",
@@ -8570,12 +8602,14 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "mosesanu/laravel-mongodb-query-monitor": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
         "php": "^8.2"
     },
-    "platform-dev": [],
+    "platform-dev": {},
     "plugin-api-version": "2.6.0"
 }

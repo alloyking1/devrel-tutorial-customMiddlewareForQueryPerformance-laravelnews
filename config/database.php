@@ -33,7 +33,7 @@ return [
 
         'mongodb' => [
             'driver' => 'mongodb',
-            'dsn' => env('MONGODB_URI'),
+            'dsn' => env('MONGODB_URI').'/?appName=devrel-github-laravelnews-customMiddlewareForQueryPerformance',
             'database' => env('MONGODB_DATABASE'),
         ],
 
