@@ -94,7 +94,7 @@ You should see fields like:
 
 For the full step-by-step implementation and architecture walkthrough, read the article:
 
-- [Build custom middleware for query performance monitoring and optimization (Laravel News)](#)
+- [Build custom middleware for query performance monitoring and optimization (Laravel News)](https://laravel-news.com/custom-middleware-for-query-performance-monitoring-and-optimization-in-laravel-with-mongodb)
 
 ## Support The Project
 
